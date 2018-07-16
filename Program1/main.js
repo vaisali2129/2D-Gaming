@@ -6,10 +6,17 @@ var mainState = {
 		//Loaded the new images monster.png,gem.png and enemy_new.png for player,coin and enemy  respectively in to the game. 
 		game.load.image('player', 'assets/monster.png');
 		game.load.image('coin', 'assets/gem.png');
-        game.load.image('enemy', 'assets/enemy_new.png');		
+        game.load.image('enemy', 'assets/enemy_new.png');	
+        
+    //this.load.image('sky', 'assets/sky.png');
+    //this.load.image('ground', 'assets/platform.png');
+    //this.load.image('star', 'assets/star.png');
+    //this.load.image('bomb', 'assets/bomb.png');
+    //this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
     },
 
-    create: function() { 
+    create: function() {
+        //  A simple background for our game 
         game.stage.backgroundColor = '#3498db';
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.renderer.renderSession.roundPixels = true;
@@ -38,13 +45,17 @@ var mainState = {
 		//its a varible which is set to 120 seconds and decrements by 1, every second.
 		this.timerCount = game.add.text(390, 30, 'timer: 120', { font: '18px Arial', fill: '#ffffff' });
         this.timer = 120;
+        //timedEvent = this.time.delayedCall(timeSet, endGame, [], this);
+        //timerTextTitle = this.add.text(575, 0, 'Time Remaining', { fontSize: '20px', fill: '#FFFFFF' });
+        //timerTextMinutes = this.add.text(755, 1, '2:', { fontSize: '20px', fill: '#FFFFFF' });
+        //timerTextSeconds = this.add.text(776, 1, '0', { fontSize: '20px', fill: '#FFFFFF' });
 
         this.enemies = game.add.group();
         this.enemies.enableBody = true;
         this.enemies.createMultiple(10, 'enemy');
         game.time.events.loop(2200, this.addEnemy, this);
 		
-		//this looped event calls udateCounter method every second[1]
+		//this looped event calls updateCounter method every second[1]
 		game.time.events.loop(Phaser.Timer.SECOND, this.updateCounter, this);
     },
 	
@@ -89,7 +100,7 @@ var mainState = {
     },
 
     takeCoin: function(player, coin) {
-        this.score += 5;
+        this.score += 10;
         this.scoreLabel.text = 'score: ' + this.score;
         this.updateCoinPosition();
     },
@@ -138,7 +149,8 @@ var mainState = {
         game.add.sprite(0, 320, 'wallH', 0, this.walls); 
         game.add.sprite(300, 320, 'wallH', 0, this.walls); 
         game.add.sprite(-100, 160, 'wallH', 0, this.walls); 
-        game.add.sprite(400, 160, 'wallH', 0, this.walls); 
+        game.add.sprite(400, 150, 'wallH', 0, this.walls); 
+       
         var middleTop = game.add.sprite(100, 80, 'wallH', 0, this.walls);
         middleTop.scale.setTo(1.5, 1);
         var middleBottom = game.add.sprite(100, 240, 'wallH', 0, this.walls);
@@ -153,6 +165,8 @@ var mainState = {
         //game.state.start('main');
 		this.deaths += 1;
         this.deathCounter.text = 'deaths: ' + this.deaths;
+        this.score = 0;
+        this.scoreLabel.text = 'score: ' + this.score;
 		var playerPosition = [
             {x: 170, y: 60}, {x: 300, y: 60}, 
             {x: 90, y: 140}, {x: 400, y: 140}, 
